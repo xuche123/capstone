@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.db import IntegrityError
+import os
 
 from .models import User
 # Create your views here.
@@ -33,6 +34,21 @@ def login_view(request):
     else:
         return render(request, "imagine/login.html")
 
+def gallery(request):
+    return render(request, "imagine/gallery.html")
+
+def generate(request):
+    return render(request, "imagine/generate.html")
+
+def generate_prompt(request):
+    if request.method == "POST":
+        prompt = request.POST["prompt"]
+        os.environ['STABILITY_HOST'] = 'grpc.stability.ai:443'
+        os.environ['STABILITY_KEY'] = 'sk-2qDzCRMdd4FcasAA5oTazmktnn18AX74PZqUhmuJo8zTj5f0'
+        # stability_api = client.StabilityInference(
+        #     key=os.environ['STABILITY_KEY'], 
+        #     verbose=True,
+        # )  
 
 def logout_view(request):
     logout(request)
