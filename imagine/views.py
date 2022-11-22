@@ -10,7 +10,7 @@ import os
 import json
 import replicate
 
-from .models import User
+from .models import User, Post, Profile, Follow, Like, Comment
 # Create your views here.
 
 
@@ -52,6 +52,14 @@ def generate_prompt(request):
         model = replicate.models.get("stability-ai/stable-diffusion")
         version = model.versions.get("8abccf52e7cba9f6e82317253f4a3549082e966db5584e92c808ece132037776")
         output = version.predict(prompt=prompt)[0]
+
+        post = Post(
+            user=request.user,
+            body=prompt,
+            url=output
+        )
+        post.save()
+
         return JsonResponse({"url": output}, status=201)
 
 def logout_view(request):
