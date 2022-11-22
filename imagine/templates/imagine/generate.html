@@ -1,17 +1,18 @@
 {% extends "imagine/layout.html" %} {% load static %} {% block body %}
 <div class="container-sm">
-    <h1>generate wip</h1>
+  <h1>generate wip</h1>
 
-    <div class="mb-3">
-        <label for="prompt" class="form-label">Enter prompt here</label>
-        <textarea class="form-control" id="prompt" rows="3"></textarea>
-    </div>
+  <div class="mb-3">
+    <label for="prompt" class="form-label">Enter prompt here</label>
+    <textarea class="form-control" id="prompt" rows="3"></textarea>
+  </div>
 
-    <div class="col-12">
-        <button type="submit" class="btn btn-primary" id="generate">
-            Generate!
-        </button>
-    </div>
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary" id="generate">
+      Generate!
+    </button>
+  </div>
+  <img id="image" />
 </div>
 {% endblock %} {% block script %}
 <script src="{% static 'imagine/generate.js' %}"></script>

@@ -8,4 +8,5 @@ urlpatterns = [
     path("register", views.register, name="register"),
     path('gallery', views.gallery, name='gallery'),
     path('generate', views.generate, name='generate'),
+    path('generate_prompt', views.generate_prompt, name='generate_prompt'),
 ]

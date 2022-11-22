@@ -4,7 +4,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.db import IntegrityError
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 import os
+import json
+import replicate
 
 from .models import User
 # Create your views here.
@@ -40,15 +44,15 @@ def gallery(request):
 def generate(request):
     return render(request, "imagine/generate.html")
 
+@csrf_exempt
 def generate_prompt(request):
     if request.method == "POST":
-        prompt = request.POST["prompt"]
-        os.environ['STABILITY_HOST'] = 'grpc.stability.ai:443'
-        os.environ['STABILITY_KEY'] = 'sk-2qDzCRMdd4FcasAA5oTazmktnn18AX74PZqUhmuJo8zTj5f0'
-        # stability_api = client.StabilityInference(
-        #     key=os.environ['STABILITY_KEY'], 
-        #     verbose=True,
-        # )  
+        prompt = json.loads(request.body)["prompt"]
+        os.environ['REPLICATE_API_TOKEN'] = 'aea73d3cdcef130dfbb774c36736e99bbab0c569'
+        model = replicate.models.get("stability-ai/stable-diffusion")
+        version = model.versions.get("8abccf52e7cba9f6e82317253f4a3549082e966db5584e92c808ece132037776")
+        output = version.predict(prompt=prompt)[0]
+        return JsonResponse({"url": output}, status=201)
 
 def logout_view(request):
     logout(request)
