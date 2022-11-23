@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
   document.querySelector("#generate").onclick = function () {
     var spinner = document.querySelector(".spinner-border");
+    var img = document.querySelector("#image");
+    img.style.display = "none";
     spinner.style.display = "block";
     var text = document.querySelector("#prompt").value;
     console.log(text);
@@ -16,7 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((result) => {
         // Print result
         spinner.style.display = "none";
-        const img = document.querySelector("#image");
+        // const img = document.querySelector("#image");
+        img.style.display = "block";
         img.src = result.url;
       });
   };
