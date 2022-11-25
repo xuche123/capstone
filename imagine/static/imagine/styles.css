@@ -40,8 +40,26 @@ div.content {
   height: 1000px;
 }
 
-/* On screens that are less than 700px wide, make the sidebar into a topbar */
-@media screen and (max-width: 700px) {
+.gallery_row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
+
+/* Create four equal columns that sits next to each other */
+.gallery_column {
+  flex: 25%;
+  max-width: 25%;
+  padding: 0 4px;
+}
+
+.gallery_column img {
+  margin-top: 8px;
+  vertical-align: middle;
+  width: 100%;
+}
+
+@media screen and (max-width: 800px) {
   .sidebar {
     width: 100%;
     height: auto;
@@ -53,9 +71,20 @@ div.content {
   div.content {
     margin-left: 0;
   }
+
+  .gallery_column {
+    flex: 50%;
+    max-width: 50%;
+  }
 }
 
-/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+@media screen and (max-width: 600px) {
+  .gallery_column {
+    flex: 100%;
+    max-width: 100%;
+  }
+}
+
 @media screen and (max-width: 400px) {
   .sidebar a {
     text-align: center;

@@ -1,3 +1,4 @@
+from math import ceil
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
@@ -45,10 +46,13 @@ def login_view(request):
 
 
 def gallery(request):
-    posts = Post.objects.all()
+    posts = list(Post.objects.all())
     length = len(posts)
+    # k, m = divmod(length, 4)
+    split = int(ceil(length/4.))
+    columns = [posts[i*split:(i+1)*split] for i in range(4)]
     return render(
-        request, "imagine/gallery.html", {"posts": posts, "length": length}
+        request, "imagine/gallery.html", {"columns": columns, "length": length}
     )
 
 
