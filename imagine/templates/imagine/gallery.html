@@ -1,3 +1,19 @@
 {% extends "imagine/layout.html" %} {% load static %} {% block body %}
-<h1>gallery wip</h1>
-{% endblock %}
+<div class="container">
+    <div class="row">
+        <h1>Gallery WIP</h1>
+        {% for post in posts %}
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <img
+                    src="{{ post.image.url }}"
+                    alt="Lights"
+                    style="width: 100%"
+                />
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% endblock %}
+</div>

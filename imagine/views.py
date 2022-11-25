@@ -45,10 +45,15 @@ def login_view(request):
 
 
 def gallery(request):
-    return render(request, "imagine/gallery.html")
+    posts = Post.objects.all()
+    length = len(posts)
+    return render(
+        request, "imagine/gallery.html", {"posts": posts, "length": length}
+    )
 
 
 def generate(request):
+
     return render(request, "imagine/generate.html")
 
 
@@ -71,7 +76,7 @@ def generate_prompt(request):
         file_name = output.split("/")[-1]
 
         post = Post(
-            id= id,
+            id=id,
             user=request.user,
             body=prompt,
             image=files.File(fp, file_name),
