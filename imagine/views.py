@@ -12,6 +12,7 @@ import json
 import replicate
 from io import BytesIO
 import requests
+import uuid
 
 from .models import User, Post, Profile, Follow, Like, Comment
 
@@ -46,6 +47,7 @@ def login_view(request):
 def gallery(request):
     return render(request, "imagine/gallery.html")
 
+
 def generate(request):
     return render(request, "imagine/generate.html")
 
@@ -62,10 +64,19 @@ def generate_prompt(request):
         output = version.predict(prompt=prompt)[0]
 
         resp = requests.get(output)
+        id = uuid.uuid4()
         fp = BytesIO()
+        fp.write(resp.content)
+        # file_name = str(id) + ".png"
         file_name = output.split("/")[-1]
-        post = Post(user=request.user, image=files.File(fp, file_name), body=prompt)
-        # post = Post(user=request.user, body=prompt, url=output)
+
+        post = Post(
+            id= id,
+            user=request.user,
+            body=prompt,
+            image=files.File(fp, file_name),
+        )
+
         post.save()
 
         return JsonResponse({"url": output}, status=201)
