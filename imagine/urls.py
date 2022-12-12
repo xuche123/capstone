@@ -9,4 +9,5 @@ urlpatterns = [
     path('gallery', views.gallery, name='gallery'),
     path('generate', views.generate, name='generate'),
     path('generate_prompt', views.generate_prompt, name='generate_prompt'),
+    path('fetch_post', views.fetch_post, name='fetch_post'),
 ]

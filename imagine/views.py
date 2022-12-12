@@ -46,14 +46,25 @@ def login_view(request):
 
 
 def gallery(request):
-    posts = list(Post.objects.all())
-    length = len(posts)
-    # k, m = divmod(length, 4)
-    split = int(ceil(length/4.))
-    columns = [posts[i*split:(i+1)*split] for i in range(4)]
-    return render(
-        request, "imagine/gallery.html", {"columns": columns, "length": length}
-    )
+    posts = Post.objects.order_by("-timestamp")[:15]
+
+    return render(request, "imagine/gallery.html", {"posts": posts})
+
+
+@csrf_exempt
+def fetch_post(request):
+    if request.method == "POST":
+        start = int(json.loads(request.body)["start"])
+        count = Post.objects.count()
+        if start + 15 > count:
+            end = count
+        else:
+            end = start + 15
+        posts = Post.objects.order_by("-timestamp")[start : end].values()
+        return JsonResponse({"posts" : list(posts)}, status=201)
+       
+    else:
+        return JsonResponse({"error": "POST request required."}, status=400)
 
 
 def generate(request):
