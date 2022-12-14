@@ -1,4 +1,3 @@
-from math import ceil
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout

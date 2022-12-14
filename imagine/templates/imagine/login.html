@@ -18,12 +18,33 @@
         />
         <link href="{% static 'imagine/styles.css' %}" rel="stylesheet" />
     </head>
-    <body>
-        <form action="{% url 'login' %}" method="post">
-            {% csrf_token %}
-            <input type="text" , name="username" , placeholder="Username" />
-            <input type="password" , name="password" , placeholder="Password" />
-            <input type="submit" , value="Login" />
-        </form>
+    <body class="login-body">
+        <div class="login-container">
+            <div class="login-left">
+                <div class="login-header">
+                    <h1>Login</h1>
+                </div>
+                <div class="login-content">
+                    <form action="{% url 'login' %}" method="post" class="login-form">
+                        {% csrf_token %}
+                        <div class="form-item">
+                            {% comment %} <label for="username">Username</label> {% endcomment %}
+                            <input type="text" , name="username" , placeholder="Enter username here" />
+                        </div>
+                        <div class="form-item">
+                            {% comment %} <label for="password">Password</label> {% endcomment %}
+                            <input type="password" , name="password" , placeholder="Enter password here" />
+                        </div>
+                        <button type="submit" class="btn btn-primary form-submit-button">Login</button>
+                        
+                    </form>
+                </div>
+            </div>
+            <div class="login-right">
+                <img src="{% static 'imagine/rocketship.png' %}" alt="login" />
+            </div>
+        </div>
+        
+        </div>
     </body>
 </html>

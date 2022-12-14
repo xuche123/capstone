@@ -14,8 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then((response) => response.json())
             .then((result) => {
-            // console.log(result)
-            // console.log(result["posts"][0])
+            
             if (result["posts"][0] == undefined) {
                 console.log("No more posts")
                 let end = document.createElement('h1')
