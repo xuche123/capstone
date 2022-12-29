@@ -16,7 +16,6 @@ import uuid
 
 from .models import User, Post, Profile, Follow, Like, Comment
 
-
 def index(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
@@ -30,7 +29,7 @@ def profile(request, username):
     })
 
 def load_prompts(request):
-    with open("imagine/result.json") as f:
+    with open("imagine/result.json", encoding="utf8") as f:
         prompt = json.load(f)
     
     start = int(request.GET.get("start") or 0)

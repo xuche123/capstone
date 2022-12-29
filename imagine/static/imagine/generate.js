@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
     img.style.display = "none";
     spinner.style.display = "block";
     var text = document.querySelector("#prompt").value;
-    console.log(text);
 
     fetch("/generate_prompt", {
       // Fetch request
