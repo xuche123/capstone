@@ -6,7 +6,7 @@ import django
 
 django.setup()
 
-from imagine.models import User, Post, Profile, Follow, Like, Comment
+from imagine.models import User, Post, Profile, Follow, Like, Comment, Prompt
 import json
 import requests
 from django.core import files

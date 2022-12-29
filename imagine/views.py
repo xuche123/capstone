@@ -22,6 +22,32 @@ def index(request):
         return HttpResponseRedirect(reverse("login"))
     return render(request, "imagine/index.html")
 
+def profile(request, username):
+    view_user = User.objects.get(username=username)
+
+    return render(request, "imagine/profile.html", {
+        "view_user": view_user
+    })
+
+def load_prompts(request):
+    with open("imagine/result.json") as f:
+        prompt = json.load(f)
+    
+    start = int(request.GET.get("start") or 0)
+    end = int(request.GET.get("end") or (start + 9))
+
+    data = []
+    for i in range(start, end + 1):
+        data.append(prompt[i]['Prompt'])
+
+    return JsonResponse({
+        "prompts": data
+    })
+
+def prompts(request):
+    return render(request, "imagine/prompts.html")
+    
+
 
 def login_view(request):
     if request.method == "POST":
@@ -59,9 +85,9 @@ def fetch_post(request):
             end = count
         else:
             end = start + 15
-        posts = Post.objects.order_by("-timestamp")[start : end].values()
-        return JsonResponse({"posts" : list(posts)}, status=201)
-       
+        posts = Post.objects.order_by("-timestamp")[start:end].values()
+        return JsonResponse({"posts": list(posts)}, status=201)
+
     else:
         return JsonResponse({"error": "POST request required."}, status=400)
 

@@ -1,0 +1,7 @@
+{% extends "imagine/layout.html" %} {% load static %} {% block body %}
+<div class="container" style="width: 50vw">
+    <div id="prompts"></div>
+</div>
+{% endblock %} {% block script %}
+<script src="{% static 'imagine/prompts.js' %}"></script>
+{% endblock %}

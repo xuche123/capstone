@@ -10,4 +10,7 @@ urlpatterns = [
     path('generate', views.generate, name='generate'),
     path('generate_prompt', views.generate_prompt, name='generate_prompt'),
     path('fetch_post', views.fetch_post, name='fetch_post'),
+    path('prompts', views.prompts, name='prompts'),
+    path("load_prompts", views.load_prompts, name="load_prompts"),
+    path("profile/<str:username>", views.profile, name="profile"),
 ]
