@@ -16,36 +16,35 @@ import uuid
 
 from .models import User, Post, Profile, Follow, Like, Comment
 
+
 def index(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
     return render(request, "imagine/index.html")
 
+
 def profile(request, username):
     view_user = User.objects.get(username=username)
 
-    return render(request, "imagine/profile.html", {
-        "view_user": view_user
-    })
+    return render(request, "imagine/profile.html", {"view_user": view_user})
+
 
 def load_prompts(request):
     with open("imagine/result.json", encoding="utf8") as f:
         prompt = json.load(f)
-    
+
     start = int(request.GET.get("start") or 0)
     end = int(request.GET.get("end") or (start + 9))
 
     data = []
     for i in range(start, end + 1):
-        data.append(prompt[i]['Prompt'])
+        data.append(prompt[i]["Prompt"])
 
-    return JsonResponse({
-        "prompts": data
-    })
+    return JsonResponse({"prompts": data})
+
 
 def prompts(request):
     return render(request, "imagine/prompts.html")
-    
 
 
 def login_view(request):
@@ -70,7 +69,7 @@ def login_view(request):
 
 
 def gallery(request):
-    posts = Post.objects.order_by("-timestamp")[:15]
+    posts = Post.objects.order_by("-timestamp")
 
     return render(request, "imagine/gallery.html", {"posts": posts})
 

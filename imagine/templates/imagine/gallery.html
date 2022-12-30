@@ -1,12 +1,33 @@
 {% extends "imagine/layout.html" %} {% load static %} {% block body %}
-<div class="gallery">
-    <div class="post">
-        {% for post in posts %}
-        <img src="{{ post.image.url }}" alt="" />
-        {% endfor %}
+<div class="grid">
+    <div class="grid-sizer"></div>
+    {% for post in posts %}
+    <div class="grid-item">
+        <a
+            href="{{ post.image.url }}"
+            data-lightbox="lightbox"
+            {% comment %} data-gallery="example-gallery" {% endcomment %}
+        >
+            <img src="{{ post.image.url }}" alt="" />
+        </a>
     </div>
+    <p></p>
+    {% endfor %}
 </div>
 
 {% endblock %} {% block script %}
 <script src="{% static 'imagine/gallery.js' %}"></script>
+<script
+    type="module"
+    src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"
+></script>
+<script
+    type="module"
+    src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"
+></script>
+<script
+    {% comment %} type="module" {% endcomment %}
+    src="{% static 'imagine/lightbox-plus-jquery.min.js' %}"
+></script>
+
 {% endblock %}
