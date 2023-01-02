@@ -6,7 +6,6 @@
         <a
             href="{{ post.image.url }}"
             data-lightbox="lightbox"
-            {% comment %} data-gallery="example-gallery" {% endcomment %}
         >
             <img src="{{ post.image.url }}" alt="" />
         </a>
@@ -26,7 +25,6 @@
     src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"
 ></script>
 <script
-    {% comment %} type="module" {% endcomment %}
     src="{% static 'imagine/lightbox-plus-jquery.min.js' %}"
 ></script>
 
