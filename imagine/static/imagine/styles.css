@@ -1,76 +1,77 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
 
 * {
-    box-sizing: border-box;
-    font-family: "Open Sans", sans-serif;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+.bio-card {
+  width: 70vw;
+  border: none;
+}
+
+.edit-profile-btn {
+  width: 150px;
 }
 
 .login-body {
-    padding: 0;
-    margin: 0;
-    padding: 40px;
-    height: 100vh;
-    background: linear-gradient(to left, #2a0845, #6441a5);
+  padding: 0;
+  margin: 0;
+  padding: 40px;
+  height: 100vh;
+  background: linear-gradient(to left, #2a0845, #6441a5);
 }
 
 .login-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
 }
 
 .login-header {
-    padding-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 .login-form {
-    width: 500px;
+  max-width: 60vw;
 }
 
 .login-form .form-item {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-submit-button {
-    width: 100%;
-    height: 3rem;
-    margin: 8px 0;
-    outline: none;
-    cursor: pointer;
-    border-radius: 100px;
+  width: 100%;
+  height: 3rem;
+  margin: 8px 0;
+  outline: none;
+  cursor: pointer;
+  border-radius: 100px;
 }
 
 .login-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-left: 150px;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 150px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 25px;
 }
 
 .login-right {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .login-right img {
-    width: 50%;
+  width: 50%;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"] {
-    /* width: 70%; */
-    padding: 0 2rem;
-    height: 3rem;
-    margin: 8px 0;
-    outline: none;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 100px;
+.register-container {
+  width: 50vw;
+  padding-top: 50px;
 }
 
 .grid-sizer,
@@ -90,59 +91,71 @@ input[type="email"] {
 }
 
 .grid {
-    width: 70vw;
-    text-align: center;
-    margin: 2rem auto;
+  width: 70vw;
+  text-align: center;
+  margin: 2rem auto;
 }
 
-
 .grid-item img {
-    width: 100%;
-    border-radius: 1rem;
-    transition: 0.2s ease-in-out;
+  width: 100%;
+  border-radius: 1rem;
+  transition: 0.2s ease-in-out;
 }
 
 .grid-item img:hover {
-    cursor: pointer;
-    transform: scale(1.025);
+  cursor: pointer;
+  transform: scale(1.025);
 }
 
-.card {
-    font-size: 18px;
-    border-radius: 0.5rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    padding: 2rem;
+.card-prompt {
+  font-size: 18px;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 2rem;
 }
 
 .btn {
   margin-right: 1rem;
 }
 
-@media screen and (max-width: 1400px) {
-    .login-left {
-        padding: 50px !important;
-    }
-    .login-form {
-        width: 100%;
-    }
+.cover {
+  width: 100%;
+  background-color: #555;
+  height: 200px;
+  overflow: hidden;
+}
 
-    .grid-sizer,
-    .grid-item {
-        width: 50%;
-    }
+.cover img {
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+@media screen and (max-width: 1400px) {
+  .login-left {
+    padding: 50px !important;
+  }
+  .login-form {
+    width: 100%;
+  }
+
+  .grid-sizer,
+  .grid-item {
+    width: 50%;
+  }
 }
 
 @media screen and (max-width: 800px) {
-    .login-container {
-        grid-template-columns: 1fr;
-    }
-    .login-right {
-        display: none;
-    }
+  .login-container {
+    grid-template-columns: 1fr;
+  }
+  .login-right {
+    display: none;
+  }
 
-    .grid-sizer,
-    .grid-item {
-        width: 100%;
-    }
+  .grid-sizer,
+  .grid-item {
+    width: 100%;
+  }
 }

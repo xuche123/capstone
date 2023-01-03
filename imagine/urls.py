@@ -13,4 +13,5 @@ urlpatterns = [
     path('prompts', views.prompts, name='prompts'),
     path("load_prompts", views.load_prompts, name="load_prompts"),
     path("profile/<str:username>", views.profile, name="profile"),
+    path("edit_profile", views.edit_profile, name="edit_profile"),
 ]

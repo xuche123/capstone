@@ -25,8 +25,32 @@ def index(request):
 
 def profile(request, username):
     view_user = User.objects.get(username=username)
+    view_profile = Profile.objects.get(user=view_user)
+    posts = Post.objects.filter(user=view_user).order_by("-timestamp")
 
-    return render(request, "imagine/profile.html", {"view_user": view_user})
+    return render(request, "imagine/profile.html", {"view_user": view_user, "view_profile": view_profile, "posts": posts})
+
+def edit_profile(request):
+    user=request.user
+    try:
+        profile = Profile.objects.get(user=user)
+    except Profile.DoesNotExist:
+        profile = Profile(user=user)
+        profile.save()
+
+    if request.method == "POST":
+        
+        user.first_name = request.POST["first_name"]
+        user.last_name = request.POST["last_name"]
+        user.save()
+        profile.bio = request.POST["bio"]
+        profile.image = request.FILES["image"]
+        profile.save()
+
+        
+        return HttpResponseRedirect(reverse("profile", kwargs={"username": user.username}))
+    else:
+        return render(request, "imagine/edit_profile.html", {"user" : user, "profile" : profile})
 
 
 def load_prompts(request):
@@ -138,6 +162,10 @@ def register(request):
         # Ensure password matches confirmation
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
+        if username=="" or email=="" or password=="" or confirmation=="":
+            return render(
+                request, "imagine/register.html", {"message": "All fields are required."}
+            )
         if password != confirmation:
             return render(
                 request, "imagine/register.html", {"message": "Passwords must match."}

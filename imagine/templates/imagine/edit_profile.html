@@ -1,0 +1,78 @@
+{% extends "imagine/layout.html" %} {% block body %}
+<div class="container-xl px-4 mt-4">
+  <div class="card mb-4">
+    <div class="card-body">
+      <form
+        action="{% url 'edit_profile' %}"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        {% csrf_token %} {{ form.as_p }}
+        <h1>Account Details</h1>
+        <h1>{{ user.first_name }}</h1>
+        <div class="row gx-3 mb-3">
+          <div class="col-md-6">
+            <label class="small mb-1" for="first_name">First name</label>
+            <input
+              class="form-control"
+              id="first_name"
+              name="first_name"
+              type="text"
+              placeholder="Enter your first name"
+              value="{{ user.first_name }}"
+            />
+          </div>
+
+          <div class="col-md-6">
+            <label class="small mb-1" for="lastname">Last name</label>
+            <input
+              class="form-control"
+              id="lastname"
+              name="last_name"
+              type="text"
+              placeholder="Enter your last name"
+              value="{{ user.last_name }}"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="small mb-1" for="email">Email address</label>
+          <input
+            class="form-control"
+            id="email"
+            name="email"
+            type="email"
+            placeholder="Enter your email address"
+            value="{{ user.email }}"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="small mb-1" for="bio">Bio</label>
+          <textarea
+            class="form-control"
+            id="bio"
+            name="bio"
+            type="text"
+            placeholder="Enter your bio here"
+            value="{{ profile.bio }}"
+          ></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label for="formFile" class="form-label">Profile Image</label>
+          <input class="form-control" type="file" id="formFile" name="image" />
+        </div>
+
+        <button class="btn btn-primary" type="submit">Save changes</button>
+        <a
+          class="btn btn-danger"
+          href="{% url 'profile' username=user.username %}"
+          >Cancel</a
+        >
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

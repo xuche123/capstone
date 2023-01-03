@@ -18,7 +18,7 @@ function load() {
 
 function add_post(contents) {
   const prompt = document.createElement("div");
-  prompt.className = "card";
+  prompt.className = "card card-prompt";
 
   const card = document.createElement("div");
   card.className = "card-body";
