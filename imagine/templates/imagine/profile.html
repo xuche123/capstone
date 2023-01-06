@@ -1,5 +1,5 @@
 {% extends "imagine/layout.html" %} {% load static %} {% block body %}
-<div class="mt-4 mb-4 p-3 d-flex justify-content-center">
+<div class="mt-4 mb-4 d-flex justify-content-center">
   <div class="card bio-card p-4">
     <div
       class="image d-flex flex-column justify-content-center align-items-center"
@@ -19,11 +19,11 @@
         </div>
         <div class="d-flex flex-column align-items-center mx-3">
           <span class="mx-5">0</span>
-          <span class="fw-light">Followers</span>
+          <span class="fw-light">Prompts</span>
         </div>
-        <div class="d-flex flex-column align-items-center">
+        <div class="d-flex flex-column align-items-center mx-3">
           <span class="mx-5">0</span>
-          <span class="fw-light">Following</span>
+          <span class="fw-light">Likes</span>
         </div>
       </div>
       {% if view_user == request.user %}

@@ -26,13 +26,6 @@ class Post(models.Model):
 
     def __str__(self):
         return self.body
-
-class Follow(models.Model):
-    follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name="follower")
-    following = models.ForeignKey(User, on_delete=models.CASCADE, related_name="following")
-
-    def __str__(self):
-        return f"{self.follower} follows {self.following}"
         
 class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -40,12 +33,6 @@ class Like(models.Model):
 
     def __str__(self):
         return f"{self.user} likes {self.post}"
-
-class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    body = models.CharField(max_length=500)
-    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.body

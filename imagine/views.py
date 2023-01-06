@@ -14,12 +14,12 @@ from io import BytesIO
 import requests
 import uuid
 
-from .models import User, Post, Profile, Follow, Like, Comment
+from .models import User, Post, Profile, Like
 
 
 def index(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("login"))
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("generate"))
     return render(request, "imagine/index.html")
 
 
@@ -93,7 +93,7 @@ def login_view(request):
 
 
 def gallery(request):
-    posts = Post.objects.order_by("-timestamp")
+    posts = Post.objects.order_by("-timestamp")[0:15]
 
     return render(request, "imagine/gallery.html", {"posts": posts})
 
@@ -101,22 +101,44 @@ def gallery(request):
 @csrf_exempt
 def fetch_post(request):
     if request.method == "POST":
+        # start = int(request.GET.get("start"))
         start = int(json.loads(request.body)["start"])
         count = Post.objects.count()
         if start + 15 > count:
             end = count
         else:
             end = start + 15
-        posts = Post.objects.order_by("-timestamp")[start:end].values()
-        return JsonResponse({"posts": list(posts)}, status=201)
+      
+        posts = Post.objects.order_by("-timestamp")[start:end]
+
+        # construct json response from posts
+        response = {}
+        count = 0
+        for post in posts:
+            new = {
+                    "id": post.id,
+                    "username": post.user.username,
+                    "body": post.body,
+                    "image": post.image.url,
+                    "timestamp": post.timestamp,
+                    # "likes": post.likes.count(),
+                    # "comments": post.comments.count(),
+                }
+            response[count] = new
+            count = count + 1
+
+        return JsonResponse(response, status=201)
 
     else:
         return JsonResponse({"error": "POST request required."}, status=400)
 
 
 def generate(request):
-
-    return render(request, "imagine/generate.html")
+    if request.user.is_authenticated:
+        return render(request, "imagine/generate.html")
+    else:
+        return HttpResponseRedirect(reverse("index"))
+    # return render(request, "imagine/generate.html")
 
 
 @csrf_exempt
@@ -161,20 +183,13 @@ def register(request):
 
         # Ensure password matches confirmation
         password = request.POST["password"]
-        confirmation = request.POST["confirmation"]
-        if username=="" or email=="" or password=="" or confirmation=="":
-            return render(
-                request, "imagine/register.html", {"message": "All fields are required."}
-            )
-        if password != confirmation:
-            return render(
-                request, "imagine/register.html", {"message": "Passwords must match."}
-            )
 
         # Attempt to create new user
         try:
             user = User.objects.create_user(username, email, password)
             user.save()
+            profile = Profile(user=user)
+            profile.save()
         except IntegrityError:
             return render(
                 request, "imagine/register.html", {"message": "Username already taken."}

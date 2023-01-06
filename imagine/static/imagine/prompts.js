@@ -13,7 +13,7 @@ function load() {
       .then((data) => {
         data["prompts"].forEach(add_post);
       });
-  }, 750);
+  }, 250);
 }
 
 function add_post(contents) {

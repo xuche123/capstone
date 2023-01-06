@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   document.querySelector("#generate").onclick = function () {
     var spinner = document.querySelector(".spinner-border");
-    var img = document.querySelector("#image");
+    var img = document.querySelector("#image-generated");
     img.style.display = "none";
     spinner.style.display = "block";
     var text = document.querySelector("#prompt").value;
