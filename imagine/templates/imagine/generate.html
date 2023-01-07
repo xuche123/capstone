@@ -1,17 +1,95 @@
 {% extends "imagine/layout.html" %} {% load static %} {% block body %}
+
 <div class="container mt-5 pt-5">
-  <p class="mt-">Describe what you want to see</p>
-  <div class="input-group mb-3">
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Enter prompt here..."
-      id="prompt"
-    />
-    <button class="btn btn-outline-secondary" type="button" id="generate">
-      Generate
-    </button>
-  </div>
+  <h1 class="visually-hidden test" id="test">TEST</h1>
+  <form action="{% url 'generate_prompt' %}" method="post">
+    {% csrf_token %}
+    <div class="alert alert-danger visually-hidden" role="alert" id="no-prompt">
+      Please enter a prompt.
+    </div>
+    <div
+      class="alert alert-danger visually-hidden"
+      role="alert"
+      id="wrong-size"
+    >
+      Please enter a valid size.
+    </div>
+
+    <div class="mb-3">
+      <label for="prompt" class="form-label">Prompt</label>
+      <input
+        type="text"
+        class="form-control"
+        id="prompt"
+        name="prompt"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="prompt-negative" class="form-label">Negative Prompt</label>
+      <input
+        type="text"
+        class="form-control"
+        id="prompt-negative"
+        name="prompt-negative"
+      />
+      <div class="form-text">specify what not to include (optional)</div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col">
+        <select class="form-select" id="width" name="width">
+          <option selected>Width</option>
+          <option value="128">128</option>
+          <option value="256">256</option>
+          <option value="384">384</option>
+          <option value="512">512</option>
+          <option value="576">576</option>
+          <option value="640">640</option>
+          <option value="704">704</option>
+          <option value="768">768</option>
+          <option value="832">832</option>
+          <option value="896">896</option>
+          <option value="960">960</option>
+          <option value="1024">1024</option>
+        </select>
+      </div>
+      <div class="col">
+        <select class="form-select" id="height" name="height">
+          <option selected>Height</option>
+          <option value="128">128</option>
+          <option value="256">256</option>
+          <option value="384">384</option>
+          <option value="512">512</option>
+          <option value="576">576</option>
+          <option value="640">640</option>
+          <option value="704">704</option>
+          <option value="768">768</option>
+          <option value="832">832</option>
+          <option value="896">896</option>
+          <option value="960">960</option>
+          <option value="1024">1024</option>
+        </select>
+      </div>
+      <div class="form-text">
+        Maximum size is 1024x768 or 768x1024. Default is 512x512.
+      </div>
+    </div>
+
+    <div class="form-check mb-3">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        id="uploadCheck"
+        name="uploadCheck"
+      />
+      <label class="form-check-label" for="uploadCheck"
+        >Upload to public gallery</label
+      >
+    </div>
+    <button type="button" class="btn btn-dark" id="generate">Submit</button>
+  </form>
 
   <div class="d-flex justify-content-center">
     <div
@@ -21,11 +99,7 @@
     ></div>
   </div>
 
-  <img
-    class="mt-5"
-    id="image-generated"
-    src="{% static 'imagine/sunset.png' %}"
-  />
+  <img class="mt-5" id="image-generated" src="" />
 </div>
 {% endblock %} {% block script %}
 <script src="{% static 'imagine/generate.js' %}"></script>

@@ -10,27 +10,10 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
         <link href="{% static 'imagine/styles.css' %}" rel="stylesheet" />
         <script src="{% static 'imagine/darkMode.js' %}"></script>
-        <script>
-          document.addEventListener("scroll", function() {
-            scrollFunction()
-          });
-
-          function scrollFunction() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-              document.getElementById("navbar").classList.remove("bg-transparent");
-              document.getElementById("navbar").classList.add("bg-secondary");
-            } else {
-            
-              document.getElementById("navbar").classList.add("bg-transparent");
-              document.getElementById("navbar").classList.remove("bg-secondary");
-
-            }
-          }
-        </script>
         {% block script %}{% endblock %}
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg sticky-top bg-transparent" id="navbar">
+        <nav class="navbar navbar-expand-lg sticky-top" id="navbar" >
           <div class="container-fluid">
             <img src="{% static 'imagine/logo-white1.png' %}" style="max-height: 15px; margin-left:10px" class="dark-logo"/>
             <img src="{% static 'imagine/logo-black1.png' %}" style="max-height: 15px; margin-left:10px" class="light-logo active"/>

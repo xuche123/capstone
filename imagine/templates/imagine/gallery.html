@@ -48,10 +48,12 @@
   </div>
   {% endfor %}
 </div>
-<div class="d-grid gap-2 col-6 mx-auto my-4">
-  <button class="btn btn-danger load-more-button">Load more</button>
+<div class="d-flex justify-content-center mb-5">
+  <button class="index-buttons load-more-button">Load more</button>
 </div>
-<h2 class="end" style="text-align: center; display: none">No more posts</h2>
+<h2 class="end mb-5" style="text-align: center; display: none">
+  No more posts!
+</h2>
 
 {% endblock %} {% block script %}
 <script src="{% static 'imagine/gallery.js' %}"></script>
@@ -63,6 +65,4 @@
   type="module"
   src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"
 ></script>
-{% comment %}
-<script src="{% static 'imagine/lightbox-plus-jquery.min.js' %}"></script>
-{% endcomment %} {% endblock %}
+{% endblock %}

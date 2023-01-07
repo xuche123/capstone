@@ -9,7 +9,12 @@
 }
 
 .index {
-  background-image: url("sunset.png");
+  background-image: linear-gradient(
+    109.6deg,
+    rgba(253, 199, 141, 1) 11.3%,
+    rgba(249, 143, 253, 1) 100.2%
+  );
+  height: 100vh;
 }
 
 .dark-logo,
@@ -36,6 +41,7 @@
 .section1 div {
   margin-top: 20px;
 }
+
 .logo {
   margin: 0;
   padding: 0;
@@ -78,7 +84,7 @@
   margin: 0;
   padding: 40px;
   height: 100vh;
-  background: linear-gradient(to left, #2a0845, #6441a5);
+  /* background: linear-gradient(to left, #2a0845, #6441a5); */
 }
 
 .login-container {
@@ -116,7 +122,7 @@
 
 .grid-sizer,
 .grid-item {
-  width: 33.333%;
+  width: 25%;
 }
 
 .grid-item {
@@ -131,7 +137,7 @@
 }
 
 .grid {
-  width: 70vw;
+  width: 80vw;
   text-align: center;
   margin: 2rem auto;
 }
@@ -145,6 +151,21 @@
 .grid-item img:hover {
   cursor: pointer;
   transform: scale(1.025);
+}
+
+.gallery-btn {
+  position: absolute;
+  top: 20%;
+  left: 80%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #555;
+  color: white;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
 .bio-card {
@@ -187,7 +208,7 @@
 
 #image-generated {
   width: 512px;
-  height: 512px;
+  /* height: 512px; */
   object-fit: cover;
   object-position: center;
   display: block;

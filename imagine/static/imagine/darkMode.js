@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const html = document.querySelector("html");
   const darkLogo = document.querySelector(".dark-logo");
   const lightLogo = document.querySelector(".light-logo");
+  const navbar = document.getElementById("navbar");
 
   const useDark = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -19,12 +20,16 @@ document.addEventListener("DOMContentLoaded", function () {
       button.classList.remove("bi-sun-fill");
       darkLogo.classList.add("active");
       lightLogo.classList.remove("active");
+      navbar.classList.add("bg-dark");
+      navbar.classList.remove("bg-light");
     } else {
       html.setAttribute("data-bs-theme", "light");
       button.classList.remove("bi-moon-stars-fill");
       button.classList.add("bi-sun-fill");
       darkLogo.classList.remove("active");
       lightLogo.classList.add("active");
+      navbar.classList.remove("bg-dark");
+      navbar.classList.add("bg-light");
     }
 
     darkModeState = state;

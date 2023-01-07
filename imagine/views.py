@@ -144,13 +144,38 @@ def generate(request):
 @csrf_exempt
 def generate_prompt(request):
     if request.method == "POST":
+        # prompt = request.POST["prompt"]
+        # negative_prompt = request.POST["prompt-negative"]
+        # width = request.POST["width"]
+        # height = request.POST["height"]
+
         prompt = json.loads(request.body)["prompt"]
+        negative_prompt = json.loads(request.body)["prompt_negative"]
+        width = json.loads(request.body)["width"]
+        height = json.loads(request.body)["height"]
+        # uploadCheck = json.loads(request.body)["uploadCheck"]
+
+        try:
+            uploadCheck = request.POST["uploadCheck"]
+        except KeyError:
+            uploadCheck = False
+        
+
+        
+        if width == "Width":
+            width = 512
+        if height == "Height":
+            height = 512
+
+        if width == "1024" and height == "1024":
+            return JsonResponse({"error": "Image size too large."}, status=400)
+
         os.environ["REPLICATE_API_TOKEN"] = "aea73d3cdcef130dfbb774c36736e99bbab0c569"
         model = replicate.models.get("stability-ai/stable-diffusion")
         version = model.versions.get(
             "8abccf52e7cba9f6e82317253f4a3549082e966db5584e92c808ece132037776"
         )
-        output = version.predict(prompt=prompt)[0]
+        output = version.predict(prompt=prompt, negative_prompt=negative_prompt, width=width, height=height)[0]
 
         resp = requests.get(output)
         id = uuid.uuid4()
@@ -159,14 +184,15 @@ def generate_prompt(request):
         # file_name = str(id) + ".png"
         file_name = output.split("/")[-1]
 
-        post = Post(
-            id=id,
-            user=request.user,
-            body=prompt,
-            image=files.File(fp, file_name),
-        )
+        if uploadCheck:
+            post = Post(
+                id=id,
+                user=request.user,
+                body=prompt,
+                image=files.File(fp, file_name),
+            )
 
-        post.save()
+            post.save()
 
         return JsonResponse({"url": output}, status=201)
 
