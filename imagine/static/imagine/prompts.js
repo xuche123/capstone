@@ -28,16 +28,11 @@ function add_post(contents) {
   text.innerHTML = contents;
 
   const use = document.createElement("button");
-  use.className = "btn btn-dark";
+  use.className = "btn btn-primary";
   use.innerHTML = "Use";
-
-  const favorite = document.createElement("button");
-  favorite.className = "btn btn-dark";
-  favorite.innerHTML = "Favorite";
 
   card.append(text);
   card.append(use);
-  card.append(favorite);
 
   prompt.append(card);
 

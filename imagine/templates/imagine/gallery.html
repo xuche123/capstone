@@ -20,7 +20,12 @@
             <span class="modal-timestamp"></span>
           </p>
         </div>
-        <div class="modal-footer"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary like-btn">Like</button>
+          <button type="button" class="btn btn-primary copy-btn">
+            Copy to clipboard
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -30,21 +35,15 @@
   <div class="grid-sizer"></div>
   {% for post in posts %}
   <div class="grid-item">
-    {% comment %}
-    <a href="{{ post.image.url }}" data-lightbox="lightbox">
-      {% endcomment %}
-      <img
-        src="{{ post.image.url }}"
-        data-bs-toggle="modal"
-        data-bs-target="#postModal"
-        data-id="{{ post.id }}"
-        data-timestamp="{{ post.timestamp }}"
-        data-user="{{ post.user }}"
-        data-body="{{ post.body }}"
-      />
-      {% comment %}
-    </a>
-    {% endcomment %}
+    <img
+      src="{{ post.image.url }}"
+      data-bs-toggle="modal"
+      data-bs-target="#postModal"
+      data-id="{{ post.id }}"
+      data-timestamp="{{ post.timestamp }}"
+      data-user="{{ post.user }}"
+      data-body="{{ post.body }}"
+    />
   </div>
   {% endfor %}
 </div>

@@ -27,6 +27,39 @@
   display: block;
 }
 
+.login-card,
+.register-card {
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  border-radius: 2rem;
+}
+
+.login-card input,
+.register-card input {
+  border-radius: 2em;
+  border: none;
+}
+
+.login-card .index-buttons,
+.register-card .index-buttons {
+  margin-top: 25px;
+  background-color: white;
+  color: black;
+}
+
+.login-card .index-buttons:hover,
+.register-card .index-buttons:hover {
+  background-color: black;
+  color: white;
+}
+
+.login-title,
+.register-title {
+  font-family: "Outfit", sans-serif;
+  font-size: 40px;
+  letter-spacing: 1px;
+}
+
 .section1 {
   padding: 0;
   height: 100vh;
@@ -72,19 +105,18 @@
 
 .index-intro {
   font-size: 20px;
-  /* margin-top: 20px; */
 }
 
 .edit-profile-btn {
   width: 150px;
 }
 
+/*
 .login-body {
   padding: 0;
   margin: 0;
   padding: 40px;
   height: 100vh;
-  /* background: linear-gradient(to left, #2a0845, #6441a5); */
 }
 
 .login-container {
@@ -118,7 +150,7 @@
 .register-container {
   width: 50vw;
   padding-top: 50px;
-}
+} */
 
 .grid-sizer,
 .grid-item {
@@ -213,6 +245,10 @@
   object-position: center;
   display: block;
   margin: 0 auto;
+}
+
+.modal-content {
+  border-radius: 0px;
 }
 
 @media screen and (max-width: 1400px) {

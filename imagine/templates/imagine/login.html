@@ -24,12 +24,12 @@
                 <img
                   src="{% static 'imagine/logo-white1.png' %}"
                   alt="logo"
-                  width="200"
+                  width="300"
                 />
               </div>
-              <div class="card">
+              <div class="card login-card">
                 <div class="card-body p-5">
-                  <h1 class="fs-4 card-title fw-bold mb-4">Login</h1>
+                  <h1 class="card-title fw-bold mb-4 login-title">Login</h1>
                   <form
                     action="{% url 'login' %}"
                     method="POST"
@@ -70,7 +70,7 @@
                       <div class="invalid-feedback">Password is required</div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary ms-auto">
+                    <button type="submit" class="btn ms-auto index-buttons">
                       Login
                     </button>
                   </form>
