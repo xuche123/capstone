@@ -1,5 +1,24 @@
 {% extends "imagine/layout.html" %} {% load static %} {% block body %}
-<div class="container" style="width: 50vw">
+<header class="search-top mt-5">
+
+    <div class="input-group searchbar">
+      <input
+        type="text"
+        id="search"
+        class="form-control"
+        placeholder="Search for a prompt..."
+      />
+      <button
+        class="btn btn-outline-secondary"
+        type="button"
+        id="search-button"
+      >
+        Search
+      </button>
+    </div>
+  </div>
+</header>
+<div class="container search-bottom visually-hidden">
   <div id="prompts"></div>
 </div>
 {% endblock %} {% block script %}

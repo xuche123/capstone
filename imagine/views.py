@@ -57,11 +57,17 @@ def load_prompts(request):
     with open("imagine/result.json", encoding="utf8") as f:
         prompt = json.load(f)
 
-    start = int(request.GET.get("start") or 0)
-    end = int(request.GET.get("end") or (start + 9))
+    search = request.GET.get("search")
+    
+    filtered = []
+    if search:
+        for i in range(len(prompt)):
+            if search.lower() in prompt[i]["Prompt"].lower():
+                filtered.append(prompt[i])
+        prompt = filtered
 
     data = []
-    for i in range(start, end + 1):
+    for i in range(len(prompt)):
         data.append(prompt[i]["Prompt"])
 
     return JsonResponse({"prompts": data})

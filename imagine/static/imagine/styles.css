@@ -251,6 +251,27 @@
   border-radius: 0px;
 }
 
+.search-top {
+  position: fixed;
+  top: 5;
+  /* background-color: white; */
+  z-index: 1;
+  width: 100vw;
+}
+
+.searchbar {
+  width: 70%;
+  margin: 0 auto;
+  /* justify-content: center; */
+}
+
+.search-bottom {
+  margin-top: 120px;
+  height: 78vh;
+  overflow-y: scroll;
+  padding: 0 !important;
+}
+
 @media screen and (max-width: 1400px) {
   .grid-sizer,
   .grid-item {
@@ -258,6 +279,10 @@
   }
   .generate-container {
     width: 75vw;
+  }
+
+  .searchbar {
+    width: 75%;
   }
 }
 
@@ -269,5 +294,9 @@
 
   .generate-container {
     width: 100vw;
+  }
+
+  .searchbar {
+    width: 100%;
   }
 }
