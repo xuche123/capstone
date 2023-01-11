@@ -6,7 +6,7 @@ import django
 
 django.setup()
 
-from imagine.models import User, Post, Profile, Follow, Like, Comment, Prompt
+from imagine.models import User, Post, Profile, Prompt
 import json
 import requests
 from django.core import files
@@ -34,8 +34,21 @@ def populate_post(file):
             )
             post.save()
 
+def populate_prompts():
+    with open("result.json", encoding="utf8") as f:
+        prompt = json.load(f)
+        users = User.objects.all()
+
+        for i in range(1000):
+            prompts = Prompt(
+                prompt=prompt[i]["Prompt"], user=users[i % len(users)]
+            )
+            prompts.save()
+
 
 if __name__ == "__main__":
     print("Populating the database...")
-    populate_post("lexica.json")
-    print("Populating complete")
+    # populate_post("lexica.json")
+    # print("Populating complete")
+    populate_prompts()
+    # Prompt.objects.all().delete()

@@ -4,7 +4,15 @@
     <div
       class="image d-flex flex-column justify-content-center align-items-center"
     >
+      {% if view_profile.image %}
       <img src="{{ view_profile.image.url }}" height="100" width="100" />
+      {% else %}
+      <img
+        src="{% static 'imagine/identicon.svg' %}"
+        height="100"
+        width="100"
+      />
+      {% endif %}
 
       <span class="fs-3 fw-semibold mt-3"
         >{{ view_user.first_name}} {{view_user.last_name }}</span
@@ -14,16 +22,12 @@
         class="d-flex flex-row justify-content-center align-items-center my-4"
       >
         <div class="d-flex flex-column align-items-center">
-          <span class="mx-5">0</span>
+          <span class="mx-5">{{ post_count }}</span>
           <span class="fw-light">Posts</span>
         </div>
         <div class="d-flex flex-column align-items-center mx-3">
-          <span class="mx-5">0</span>
+          <span class="mx-5">{{ prompt_count }}</span>
           <span class="fw-light">Prompts</span>
-        </div>
-        <div class="d-flex flex-column align-items-center mx-3">
-          <span class="mx-5">0</span>
-          <span class="fw-light">Likes</span>
         </div>
       </div>
       {% if view_user == request.user %}
@@ -46,7 +50,6 @@
   </div>
 </div>
 
-<h1 style="text-align: center">User Posts</h1>
 <!-- Modal -->
 <div
   class="modal fade"
@@ -67,33 +70,82 @@
             <span class="modal-timestamp"></span>
           </p>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary like-btn">Like</button>
-          <button type="button" class="btn btn-primary copy-btn">
-            Copy to clipboard
-          </button>
-        </div>
+        <button type="button" class="btn btn-primary copy-btn mt-4">
+          Copy to clipboard
+        </button>
       </div>
     </div>
   </div>
 </div>
-<div class="grid">
-  <div class="grid-sizer"></div>
-  {% for post in posts %}
-  <div class="grid-item">
-    <img
-      src="{{ post.image.url }}"
-      data-bs-toggle="modal"
-      data-bs-target="#postModal1"
-      data-id="{{ post.id }}"
-      data-timestamp="{{ post.timestamp }}"
-      data-user="{{ post.user }}"
-      data-body="{{ post.body }}"
-    />
+<ul
+  class="nav nav-pills justify-content-center align-items-center"
+  id="pills-tab"
+  role="tablist"
+>
+  <li class="nav-item" role="presentation">
+    <button
+      class="nav-link active"
+      id="pills-home-tab"
+      data-bs-toggle="pill"
+      data-bs-target="#pills-home"
+      type="button"
+      role="tab"
+    >
+      Posts
+    </button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button
+      class="nav-link"
+      id="pills-profile-tab"
+      data-bs-toggle="pill"
+      data-bs-target="#pills-profile"
+      type="button"
+      role="tab"
+    >
+      Prompts
+    </button>
+  </li>
+</ul>
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="pills-home" role="tabpanel"b"
+  tabindex="0" > {% if not posts %}
+  <p class="text-center mt-4 mb-4">No posts yet!</p>
+  {% else %}
+  <div class="grid">
+    <div class="grid-sizer"></div>
+    {% for post in posts %}
+    <div class="grid-item">
+      <img
+        src="{{ post.image.url }}"
+        data-bs-toggle="modal"
+        data-bs-target="#postModal1"
+        data-id="{{ post.id }}"
+        data-timestamp="{{ post.timestamp }}"
+        data-user="{{ post.user }}"
+        data-body="{{ post.body }}"
+      />
+    </div>
+    {% endfor %}
   </div>
-  {% endfor %}
+  {% endif %}
 </div>
-
+<div class="container tab-pane fade" id="pills-profile" role="tabpanel" tabindex="0">
+  {% if not prompts %}
+  <p class="text-center mt-4 mb-4">No prompts yet!</p>
+  {% else %}
+  
+    {% for prompt in prompts %}
+    <div class="card prompt-card my-3">
+      <div class="card-body">
+        <p class="card-text">{{ prompt.prompt }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  
+  {% endif %}
+  </div>
+</div>
 {% endblock %} {% block script %}
 <script src="{% static 'imagine/profile.js' %}"></script>
 <script

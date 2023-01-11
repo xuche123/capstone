@@ -1,25 +1,30 @@
 {% extends "imagine/layout.html" %} {% load static %} {% block body %}
-<header class="search-top mt-5">
-
-    <div class="input-group searchbar">
-      <input
-        type="text"
-        id="search"
-        class="form-control"
-        placeholder="Search for a prompt..."
-      />
-      <button
-        class="btn btn-outline-secondary"
-        type="button"
-        id="search-button"
-      >
-        Search
-      </button>
+<div class="container">
+  <header class="search-top mt-5">
+      <div class="input-group searchbar">
+        <input
+          type="text"
+          id="search"
+          class="form-control"
+          placeholder="Search for a prompt..."
+        />
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          id="search-button"
+        >
+          Search
+        </button>
+      </div>
     </div>
+  </header>
+
+  <div class="container search-bottom visually-hidden">
+      <div class="col-12">
+        <h2 class="search-count text-center pt-3 pb-3"></h2>
+      </div>
+    <div id="prompts"></div>
   </div>
-</header>
-<div class="container search-bottom visually-hidden">
-  <div id="prompts"></div>
 </div>
 {% endblock %} {% block script %}
 <script src="{% static 'imagine/prompts.js' %}"></script>

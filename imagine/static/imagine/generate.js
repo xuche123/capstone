@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
     var test = document.querySelector("#test");
 
     var prompt = document.querySelector("#prompt").value;
-    var prompt_negative = document.querySelector("#prompt-negative").value;
     var width = document.querySelector("#width").value;
     var height = document.querySelector("#height").value;
     var upload = document.querySelector("#uploadCheck").checked;
@@ -44,7 +43,6 @@ document.addEventListener("DOMContentLoaded", function () {
         method: "POST",
         body: JSON.stringify({
           prompt: prompt,
-          prompt_negative: prompt_negative,
           width: width,
           height: height,
           upload: upload,
@@ -52,12 +50,18 @@ document.addEventListener("DOMContentLoaded", function () {
       })
         .then((response) => response.json())
         .then((result) => {
-          // Print result
           spinner.style.display = "none";
-          // const img = document.querySelector("#image");
           img.style.display = "block";
           img.src = result.url;
         });
     }
+  };
+  btn2 = document.querySelector("#random");
+  btn2.onclick = function () {
+    fetch("/random_prompt").then((response) => {
+      response.json().then((result) => {
+        document.querySelector("#prompt").value = result.prompt;
+      });
+    });
   };
 });

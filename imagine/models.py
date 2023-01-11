@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.utils.safestring import mark_safe
 import uuid
 
 # Create your models here.
@@ -16,7 +15,7 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
-
+    
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -26,13 +25,10 @@ class Post(models.Model):
 
     def __str__(self):
         return self.body
-        
-class Like(models.Model):
+
+class Prompt(models.Model):
+    prompt = models.CharField(max_length=1000)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.user} likes {self.post}"
-
-    def __str__(self):
-        return self.body
+        return self.prompt

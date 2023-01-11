@@ -9,9 +9,10 @@ document.addEventListener("DOMContentLoaded", function () {
           .then((response) => response.json())
           .then((data) => {
             document.querySelector("#prompts").innerHTML = "";
+            document.querySelector(".search-count").innerHTML =
+              data["count"] + " results found";
 
             data["prompts"].forEach(add_post);
-            console.log(data);
           });
         document
           .querySelector(".search-bottom")
@@ -31,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
     text.innerHTML = contents;
 
     const use = document.createElement("button");
-    use.className = "btn btn-primary";
+    use.className = "btn btn-primary copy-btn";
     use.innerHTML = "Use";
 
     card.append(text);
@@ -40,12 +41,14 @@ document.addEventListener("DOMContentLoaded", function () {
     prompt.append(card);
 
     document.querySelector("#prompts").append(prompt);
-  }
 
-  // window.onscroll = () => {
-  //   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-  //   if (clientHeight + scrollTop + 5 >= scrollHeight) {
-  //     load();
-  //   }
-  // };
+    const copyButton = document.querySelectorAll(".copy-btn");
+    copyButton.forEach((btn) =>
+      btn.addEventListener("click", function (event) {
+        var post = event.target.parentElement.querySelector(".card-text");
+        navigator.clipboard.writeText(post.innerText);
+        btn.innerHTML = "Copied!";
+      })
+    );
+  }
 });

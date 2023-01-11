@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.db import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
@@ -13,8 +12,9 @@ import replicate
 from io import BytesIO
 import requests
 import uuid
+import random
 
-from .models import User, Post, Profile, Like
+from .models import User, Post, Profile, Prompt
 
 
 def index(request):
@@ -27,8 +27,18 @@ def profile(request, username):
     view_user = User.objects.get(username=username)
     view_profile = Profile.objects.get(user=view_user)
     posts = Post.objects.filter(user=view_user).order_by("-timestamp")
+    post_count = posts.count()
+    prompts = Prompt.objects.filter(user=view_user)
+    prompt_count = prompts.count()
 
-    return render(request, "imagine/profile.html", {"view_user": view_user, "view_profile": view_profile, "posts": posts})
+    return render(request, "imagine/profile.html", {
+        "view_user": view_user, 
+        "view_profile": view_profile, 
+        "posts": posts, 
+        "post_count": post_count,
+        "prompts": prompts,
+        "prompt_count": prompt_count
+    })
 
 def edit_profile(request):
     user=request.user
@@ -40,38 +50,41 @@ def edit_profile(request):
 
     if request.method == "POST":
         
-        user.first_name = request.POST["first_name"]
-        user.last_name = request.POST["last_name"]
+        if request.POST["first_name"] != "":
+            user.first_name = request.POST["first_name"]
+        if request.POST["last_name"] != "":
+            user.last_name = request.POST["last_name"]
+        if request.POST["email"] != "":
+            profile.bio = request.POST["bio"]
         user.save()
-        profile.bio = request.POST["bio"]
-        profile.image = request.FILES["image"]
-        profile.save()
-
-        
+        try:
+            profile.image = request.FILES["image"]
+        except KeyError:
+            pass
+        profile.save()    
         return HttpResponseRedirect(reverse("profile", kwargs={"username": user.username}))
     else:
         return render(request, "imagine/edit_profile.html", {"user" : user, "profile" : profile})
 
 
 def load_prompts(request):
-    with open("imagine/result.json", encoding="utf8") as f:
-        prompt = json.load(f)
+    prompts = Prompt.objects.all()
 
     search = request.GET.get("search")
     
     filtered = []
     if search:
-        for i in range(len(prompt)):
-            if search.lower() in prompt[i]["Prompt"].lower():
-                filtered.append(prompt[i])
-        prompt = filtered
+        for prompt in prompts:
+            if prompt.prompt.lower().find(search.lower()) != -1:
+                filtered.append(prompt.prompt)
+    count = len(filtered)
 
-    data = []
-    for i in range(len(prompt)):
-        data.append(prompt[i]["Prompt"])
+    return JsonResponse({"prompts": filtered, "count": count})
 
-    return JsonResponse({"prompts": data})
-
+def random_prompt(request):
+    prompts = list(Prompt.objects.all())
+    prompt = random.choice(prompts)
+    return JsonResponse({"prompt": prompt.prompt})
 
 def prompts(request):
     return render(request, "imagine/prompts.html")
@@ -107,7 +120,6 @@ def gallery(request):
 @csrf_exempt
 def fetch_post(request):
     if request.method == "POST":
-        # start = int(request.GET.get("start"))
         start = int(json.loads(request.body)["start"])
         count = Post.objects.count()
         if start + 15 > count:
@@ -126,9 +138,6 @@ def fetch_post(request):
                     "username": post.user.username,
                     "body": post.body,
                     "image": post.image.url,
-                    "timestamp": post.timestamp,
-                    # "likes": post.likes.count(),
-                    # "comments": post.comments.count(),
                 }
             response[count] = new
             count = count + 1
@@ -144,29 +153,18 @@ def generate(request):
         return render(request, "imagine/generate.html")
     else:
         return HttpResponseRedirect(reverse("index"))
-    # return render(request, "imagine/generate.html")
-
 
 @csrf_exempt
 def generate_prompt(request):
     if request.method == "POST":
-        # prompt = request.POST["prompt"]
-        # negative_prompt = request.POST["prompt-negative"]
-        # width = request.POST["width"]
-        # height = request.POST["height"]
-
         prompt = json.loads(request.body)["prompt"]
-        negative_prompt = json.loads(request.body)["prompt_negative"]
         width = json.loads(request.body)["width"]
         height = json.loads(request.body)["height"]
-        # uploadCheck = json.loads(request.body)["uploadCheck"]
 
         try:
             uploadCheck = request.POST["uploadCheck"]
         except KeyError:
             uploadCheck = False
-        
-
         
         if width == "Width":
             width = 512
@@ -181,13 +179,12 @@ def generate_prompt(request):
         version = model.versions.get(
             "8abccf52e7cba9f6e82317253f4a3549082e966db5584e92c808ece132037776"
         )
-        output = version.predict(prompt=prompt, negative_prompt=negative_prompt, width=width, height=height)[0]
+        output = version.predict(prompt=prompt, width=width, height=height)[0]
 
         resp = requests.get(output)
         id = uuid.uuid4()
         fp = BytesIO()
         fp.write(resp.content)
-        # file_name = str(id) + ".png"
         file_name = output.split("/")[-1]
 
         if uploadCheck:
@@ -199,6 +196,19 @@ def generate_prompt(request):
             )
 
             post.save()
+
+        try:
+            promptCheck = request.POST["promptCheck"]
+        except KeyError:
+            promptCheck = False
+        
+        if promptCheck:
+            prompt1 = Prompt(
+                prompt=prompt,
+                user=request.user
+            )
+            prompt1.save()
+
 
         return JsonResponse({"url": output}, status=201)
 

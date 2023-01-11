@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
         post.className = "grid-item";
         post.innerHTML =
           `<img src="${y[i].image}" data-id="${y[i].id}" data-bs-toggle="modal" data-bs-target="#postModal"` +
-          ` data-body="${y[i].body}" data-timestamp="${y[i].timestamp}" data-username="${y[i].username}" >`;
+          ` data-body="${y[i].body}" data-user="${y[i].username}" >`;
 
         fragment.appendChild(post);
         posts.push(post);
@@ -57,16 +57,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const copyButton = document.querySelector(".copy-btn");
   const postModal = document.getElementById("postModal");
   postModal.addEventListener("show.bs.modal", function (event) {
-    console.log(1);
     var post = event.relatedTarget;
     var image = post.getAttribute("src");
     var body = post.getAttribute("data-body");
-    var timestamp = post.getAttribute("data-timestamp");
     var username = post.getAttribute("data-user");
     copyButton.innerHTML = "Copy to clipboard";
 
     postModal.querySelector(".modal-user").innerText = username;
-    postModal.querySelector(".modal-timestamp").innerText = timestamp;
     postModal.querySelector(".modal-prompt").innerText = body;
     postModal.querySelector(".modal-image").setAttribute("src", image);
   });
@@ -77,5 +74,11 @@ document.addEventListener("DOMContentLoaded", function () {
     navigator.clipboard.writeText(copyText.innerText);
 
     copyButton.innerHTML = "Copied!";
+  });
+
+  const userButton = document.querySelector(".user-btn");
+  userButton.addEventListener("click", function () {
+    var user = document.querySelector(".modal-user").innerText;
+    window.location.href = `/profile/${user}`;
   });
 });

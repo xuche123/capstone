@@ -8,6 +8,9 @@
   font-family: "Open Sans", sans-serif;
 }
 
+.container {
+  width: 60vw;
+}
 .index {
   background-image: linear-gradient(
     109.6deg,
@@ -84,7 +87,7 @@
 }
 
 .index-buttons {
-  width: 300px;
+  width: 265px;
   height: 50px;
   border-radius: 50px;
   border: none;
@@ -110,47 +113,6 @@
 .edit-profile-btn {
   width: 150px;
 }
-
-/*
-.login-body {
-  padding: 0;
-  margin: 0;
-  padding: 40px;
-  height: 100vh;
-}
-
-.login-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  height: 100%;
-}
-
-.login-header {
-  padding-bottom: 20px;
-}
-
-.login-form {
-  max-width: 60vw;
-}
-
-.login-form .form-item {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-submit-button {
-  width: 100%;
-  height: 3rem;
-  margin: 8px 0;
-  outline: none;
-  cursor: pointer;
-  border-radius: 100px;
-}
-
-.register-container {
-  width: 50vw;
-  padding-top: 50px;
-} */
 
 .grid-sizer,
 .grid-item {
@@ -239,37 +201,20 @@
 }
 
 #image-generated {
-  width: 512px;
-  /* height: 512px; */
+  width: 100%;
   object-fit: cover;
   object-position: center;
   display: block;
   margin: 0 auto;
+  margin-bottom: 1rem;
 }
 
 .modal-content {
   border-radius: 0px;
 }
 
-.search-top {
-  position: fixed;
-  top: 5;
-  /* background-color: white; */
-  z-index: 1;
-  width: 100vw;
-}
-
-.searchbar {
-  width: 70%;
-  margin: 0 auto;
-  /* justify-content: center; */
-}
-
-.search-bottom {
-  margin-top: 120px;
-  height: 78vh;
-  overflow-y: scroll;
-  padding: 0 !important;
+.pills-tab {
+  align-items: center;
 }
 
 @media screen and (max-width: 1400px) {
@@ -281,8 +226,8 @@
     width: 75vw;
   }
 
-  .searchbar {
-    width: 75%;
+  .container {
+    width: 100vw;
   }
 }
 
@@ -294,9 +239,5 @@
 
   .generate-container {
     width: 100vw;
-  }
-
-  .searchbar {
-    width: 100%;
   }
 }

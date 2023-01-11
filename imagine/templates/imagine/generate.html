@@ -1,6 +1,6 @@
 {% extends "imagine/layout.html" %} {% load static %} {% block body %}
 
-<div class="container mt-5 pt-5">
+<div class="container mt-5">
   <h1 class="visually-hidden test" id="test">TEST</h1>
   <form action="{% url 'generate_prompt' %}" method="post">
     {% csrf_token %}
@@ -24,17 +24,6 @@
         name="prompt"
         required
       />
-    </div>
-
-    <div class="mb-3">
-      <label for="prompt-negative" class="form-label">Negative Prompt</label>
-      <input
-        type="text"
-        class="form-control"
-        id="prompt-negative"
-        name="prompt-negative"
-      />
-      <div class="form-text">specify what not to include (optional)</div>
     </div>
 
     <div class="row mb-3">
@@ -85,10 +74,24 @@
         name="uploadCheck"
       />
       <label class="form-check-label" for="uploadCheck"
-        >Upload to public gallery</label
+        >Upload generated image to public gallery</label
+      >
+    </div>
+    <div class="form-check mb-3">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        id="promptCheck"
+        name="promptCheck"
+      />
+      <label class="form-check-label" for="promptCheck"
+        >Save and upload prompt</label
       >
     </div>
     <button type="button" class="btn btn-primary" id="generate">Submit</button>
+    <button type="button" class="btn btn-primary" id="random">
+      Get random prompt
+    </button>
   </form>
 
   <div class="d-flex justify-content-center">
