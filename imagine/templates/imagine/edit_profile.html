@@ -7,7 +7,7 @@
         method="post"
         enctype="multipart/form-data"
       >
-        {% csrf_token %} {{ form.as_p }}
+        {% csrf_token %}
         <h1>Account Details</h1>
         <div class="row gx-3 mb-3">
           <div class="col-md-6">
@@ -64,11 +64,13 @@
           <input class="form-control" type="file" id="formFile" name="image" />
         </div>
 
-        <button class="btn btn-primary" type="submit">Save changes</button>
+        <button class="btn btn-primary" type="submit">
+          <i class="bi bi-save-fill"></i>&nbsp; Save changes
+        </button>
         <a
           class="btn btn-danger"
           href="{% url 'profile' username=user.username %}"
-          >Cancel</a
+          ><i class="bi bi-x-circle-fill"></i>&nbsp; Cancel</a
         >
       </form>
     </div>

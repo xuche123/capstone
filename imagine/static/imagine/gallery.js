@@ -61,7 +61,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var image = post.getAttribute("src");
     var body = post.getAttribute("data-body");
     var username = post.getAttribute("data-user");
-    copyButton.innerHTML = "Copy to clipboard";
+    copyButton.innerHTML =
+      "<i class='bi bi-clipboard2-fill'></i>&nbsp; Copy to clipboard";
 
     postModal.querySelector(".modal-user").innerText = username;
     postModal.querySelector(".modal-prompt").innerText = body;
@@ -80,5 +81,11 @@ document.addEventListener("DOMContentLoaded", function () {
   userButton.addEventListener("click", function () {
     var user = document.querySelector(".modal-user").innerText;
     window.location.href = `/profile/${user}`;
+  });
+
+  const downloadButton = document.querySelector(".download-btn");
+  downloadButton.addEventListener("click", function () {
+    var image = document.querySelector(".modal-image").getAttribute("src");
+    downloadButton.setAttribute("href", image);
   });
 });
