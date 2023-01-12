@@ -1,6 +1,6 @@
-# CS50w Capstone
+# CS50w Capstone Project
 
-Imagine is a web application that allows users to create, share and view AI generated art. The art is generated using the stable diffusion model by stability.ai hosted on [replicate](https://replicate.com/stability-ai/stable-diffusion). Features of the web application includes:
+Imagine is a web application that allows users to create, share and view AI generated art. The art is generated using the stable diffusion model by stability.ai hosted on [replicate](https://replicate.com/stability-ai/stable-diffusion). Custom art and prompts used for demonstration purposes are retrieved from [Lexica](https://lexica.art/). Features of the web application includes:
 
 1. Generation of AI art with specific prompts.
 2. Gallery page to view creations of other people.
@@ -16,13 +16,13 @@ Complexity: I believe this project is sufficiently distinct as it incorporates m
 # Structure Overview
 
 - `static\imagine`
-  - `darkMode.js` - toggling of dark/light mode on the web application
-  - `gallery.js` - controls behavior of gallery page
-  - `generate.js` - controls behavior of generate page
-  - `login.js` - controls behavior of login page
-  - `profile.js`- controls behavior of profile page
-  - `prompts.js` - controls behavior of prompt page
-  - `styles.css` - responsible for styling of the different pages
+  - `darkMode.js`
+  - `gallery.js`
+  - `generate.js`
+  - `login.js`
+  - `profile.js`
+  - `prompts.js`
+  - `styles.css`
 - `templates\imgaine`
   - `edit_profile.html`
   - `gallery.html`
@@ -63,11 +63,11 @@ Complexity: I believe this project is sufficiently distinct as it incorporates m
 
 - `profile.js`
 
-  - Responsible for the behavior of the profile page. Similar to `gallery.js` but without the "load more" button.
+  - Responsible for the behavior of the `profile` page. Similar to `gallery.js` but without the "load more" button.
 
 - `prompts.js`
 
-  - Responsible for the behavior of the prompts page. When the "Search" button is clicked, the input in the search box will be used to find prompts in the database that match the search term. The matches will then be displayed on the page.
+  - Responsible for the behavior of the `prompts` page. When the "Search" button is clicked, the input in the search box will be used to find prompts in the database that match the search term. The matches will then be displayed on the page.
 
 - `models.py`
 
@@ -78,7 +78,7 @@ Complexity: I believe this project is sufficiently distinct as it incorporates m
   - `Post`
     - Contains information of the generated images. Fields include upload user, image url, prompt used and time created.
   - `Prompt`
-    - Contains information of prompts that can be used. Fields include upload user and prompt text.
+    - Contains information of prompts that can be used. Fields include upload user and prompt text. Comes with 1000 prompts by default and allows for users to upload their own prompts.
 
 - `views.py`
   - API
@@ -92,18 +92,28 @@ Complexity: I believe this project is sufficiently distinct as it incorporates m
       - Backend API for `generate.js`.
   - Website URLS
     - `login`
-      - Renders the login page.
+      - Renders the `login` page.
     - `logout`
-      - Logs the user out and redirects to the index page.
+      - Logs the user out and redirects to the `index` page.
     - `register`
-      - Renders the registration page.
+      - Renders the `registration` page.
     - `gallery`
-      - Renders the gallery page.
+      - Renders the `gallery` page.
     - `generate`
       - Sends an api request to a stable diffusion model hosted on [replicate](https://replicate.com/stability-ai/stable-diffusion). Response is sent to the frontend end to be displayed
     - `prompts`
-      - Renders the prompts page.
+      - Renders the `prompts` page.
     - `profile`
-      - Renders the profile page.
+      - Renders the `profile` page.
     - `edit_profile`
       - Allows the user to edit their profile information.
+
+# Installations and how to run
+
+1. Install require packages using:
+
+   `pip install -r requirements.txt`
+
+2. Start the server using:
+
+   `python manage.py runserver`
