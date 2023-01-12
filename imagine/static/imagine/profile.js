@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
   var grid = document.querySelector(".grid");
-  var start = 15;
   let msnry = new Masonry(grid, {
     itemSelector: "none",
     columnWidth: ".grid-sizer",
