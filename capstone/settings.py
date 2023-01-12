@@ -29,7 +29,7 @@ SECRET_KEY = "django-insecure--&h+bp7c0e$ycf5()!qbb!98s5n-5drgb5!6b-$ejbn)h0ko)+
 DEBUG = True
 
 ALLOWED_HOSTS = ['imagine.up.railway.app', 'localhost', '0.0.0.0']
-
+CSRF_TRUSTED_ORIGINS = ['https://imagine.up.railway.app']
 
 # Application definition
 
