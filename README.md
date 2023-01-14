@@ -1,6 +1,6 @@
 # CS50w Capstone Project
 
-Imagine is a web application that allows users to create, share and view AI generated art. The art is generated using the stable diffusion model by stability.ai hosted on [replicate](https://replicate.com/stability-ai/stable-diffusion). Custom art and prompts used for demonstration purposes are retrieved from [Lexica](https://lexica.art/). Features of the web application includes:
+Imagine is a web application that allows users to create, share and view AI generated art. The art is generated using the stable diffusion model by Stability AI hosted on [replicate](https://replicate.com/stability-ai/stable-diffusion). Custom art and prompts used for demonstration purposes are retrieved from [Lexica](https://lexica.art/). Features of the web application includes:
 
 1. Generation of AI art with specific prompts.
 2. Gallery page to view creations of other people.
@@ -9,9 +9,9 @@ Imagine is a web application that allows users to create, share and view AI gene
 
 # Distinctiveness and Complexity
 
-Distinctiveness: This capstone project is a web application that allows you to create and share AI generated art. It is distinct from the other CS50w projects and in particular is not an e-commerce site or social network
+Distinctiveness: This project was inspired by the release of the stable diffusion v2 release by Stability AI and is my attempt to create a web application that allows you to create and share AI generated art. This web application is heavily focused on the media, in particular images which is not the main focus of other projects in the course. Hence, the concept of this web application makes it distinct from the other CS50w projects and in particular is not an e-commerce site or social network
 
-Complexity: I believe this project is sufficiently distinct as it incorporates most of the concepts taught during the course. This project uses Django in the backend with 4 models. The frontend uses vanilla HTML/CSS/Javascript. Bootstrap is also used to aid in styling. This project is mobile-responsive as well/
+Complexity: I believe this project is sufficiently distinct as it incorporates most of the concepts taught during the course. This project uses Django in the backend with 4 models. The frontend uses vanilla HTML/CSS/Javascript. Bootstrap is also used to aid in styling. This project is mobile-responsive as well.
 
 # Structure Overview
 
