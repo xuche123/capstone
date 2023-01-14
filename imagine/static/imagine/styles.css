@@ -43,15 +43,18 @@
   border: none;
 }
 
-.login-card .index-buttons,
-.register-card .index-buttons {
-  margin-top: 25px;
+.login-card .login-buttons,
+.register-card .login-buttons {
+  /* margin-top: 25px; */
   background-color: white;
   color: black;
+  font-family: "outfit", sans-serif;
+  font-size: 20px;
+  border-radius: 50px;
 }
 
-.login-card .index-buttons:hover,
-.register-card .index-buttons:hover {
+.login-card .login-buttons:hover,
+.register-card .login-buttons:hover {
   background-color: black;
   color: white;
 }
