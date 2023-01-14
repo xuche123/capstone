@@ -157,15 +157,23 @@ def generate(request):
 @csrf_exempt
 def generate_prompt(request):
     if request.method == "POST":
+        print(json.loads(request.body))
         prompt = json.loads(request.body)["prompt"]
         width = json.loads(request.body)["width"]
         height = json.loads(request.body)["height"]
 
         try:
-            uploadCheck = request.POST["uploadCheck"]
+            uploadCheck = json.loads(request.body)["upload"]
         except KeyError:
             uploadCheck = False
-        
+
+        try:
+            promptCheck = json.loads(request.body)["prompt1"]
+        except KeyError:
+            promptCheck = False
+
+        print(promptCheck)
+
         if width == "Width":
             width = 512
         if height == "Height":
@@ -173,44 +181,42 @@ def generate_prompt(request):
 
         if width == "1024" and height == "1024":
             return JsonResponse({"error": "Image size too large."}, status=400)
+        else:
 
-        os.environ["REPLICATE_API_TOKEN"] = "aea73d3cdcef130dfbb774c36736e99bbab0c569"
-        model = replicate.models.get("stability-ai/stable-diffusion")
-        version = model.versions.get(
-            "8abccf52e7cba9f6e82317253f4a3549082e966db5584e92c808ece132037776"
-        )
-        output = version.predict(prompt=prompt, width=width, height=height)[0]
-
-        resp = requests.get(output)
-        id = uuid.uuid4()
-        fp = BytesIO()
-        fp.write(resp.content)
-        file_name = output.split("/")[-1]
-
-        if uploadCheck:
-            post = Post(
-                id=id,
-                user=request.user,
-                body=prompt,
-                image=files.File(fp, file_name),
+            os.environ["REPLICATE_API_TOKEN"] = "aea73d3cdcef130dfbb774c36736e99bbab0c569"
+            model = replicate.models.get("stability-ai/stable-diffusion")
+            version = model.versions.get(
+                "8abccf52e7cba9f6e82317253f4a3549082e966db5584e92c808ece132037776"
             )
+            output = version.predict(prompt=prompt, width=width, height=height)[0]
 
-            post.save()
+            resp = requests.get(output)
+            id = uuid.uuid4()
+            fp = BytesIO()
+            fp.write(resp.content)
+            file_name = output.split("/")[-1]
 
-        try:
-            promptCheck = request.POST["promptCheck"]
-        except KeyError:
-            promptCheck = False
-        
-        if promptCheck:
-            prompt1 = Prompt(
-                prompt=prompt,
-                user=request.user
-            )
-            prompt1.save()
+            if uploadCheck:
+                post = Post(
+                    id=id,
+                    user=request.user,
+                    body=prompt,
+                    image=files.File(fp, file_name),
+                )
+
+                post.save()
+
+            
+            
+            if promptCheck:
+                prompt1 = Prompt(
+                    prompt=prompt,
+                    user=request.user
+                )
+                prompt1.save()
 
 
-        return JsonResponse({"url": output}, status=201)
+            return JsonResponse({"url": output}, status=201)
 
 
 def logout_view(request):

@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var width = document.querySelector("#width").value;
     var height = document.querySelector("#height").value;
     var upload = document.querySelector("#uploadCheck").checked;
+    var prompt1 = document.querySelector("#prompt1Check").checked;
 
     // remove alerts
     var prompt_alert = document.querySelector("#no-prompt");
@@ -35,9 +36,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     img.style.display = "none";
-    spinner.style.display = "block";
 
     if (success) {
+      spinner.style.display = "block";
       fetch("/generate_prompt", {
         // Fetch request
         method: "POST",
@@ -46,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
           width: width,
           height: height,
           upload: upload,
+          prompt1: prompt1,
         }),
       })
         .then((response) => response.json())
