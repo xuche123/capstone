@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  let darkModeState = false;
+  let darkMode = false;
 
   const button = document.getElementById("darkModeBtn");
   const html = document.querySelector("html");
@@ -7,10 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const lightLogo = document.querySelector(".light-logo");
   const navbar = document.getElementById("navbar");
 
-  const useDark = window.matchMedia("(prefers-color-scheme: dark)");
+  if (window.matchMedia) {
+    const useDark = window.matchMedia("(prefers-color-scheme: dark)");
 
-  if (useDark.matches) {
-    toggleDarkMode(true);
+    if (useDark.matches) {
+      toggleDarkMode(true);
+    }
   }
 
   function toggleDarkMode(state) {
@@ -32,19 +34,12 @@ document.addEventListener("DOMContentLoaded", function () {
       navbar.classList.add("bg-light");
     }
 
-    darkModeState = state;
+    darkMode = state;
   }
-
-  function setDarkModeLocalStorage(state) {
-    localStorage.setItem("dark-mode", state);
-  }
-
-  toggleDarkMode(localStorage.getItem("dark-mode") == "true");
 
   button.addEventListener("click", () => {
-    darkModeState = !darkModeState;
+    darkMode = !darkMode;
 
-    toggleDarkMode(darkModeState);
-    setDarkModeLocalStorage(darkModeState);
+    toggleDarkMode(darkMode);
   });
 });
